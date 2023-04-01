@@ -33,10 +33,7 @@ class _ProjectPageState extends State<ProjectPage> {
               task: "Schach spielen",
               description: "und gewinnen",
               done: false,
-              assignedTo: User(
-                name: "heeecker",
-                discordUrl: "discord.gg",
-              ),
+              assignedTo: null,
             )
           ],
         ),

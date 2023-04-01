@@ -46,7 +46,7 @@ class _ToDoState extends State<ToDo> {
               children: [
                 Text(
                   widget.task,
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontSize: 18,
                   ),
                 ),

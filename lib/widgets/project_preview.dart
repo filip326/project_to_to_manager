@@ -3,6 +3,8 @@ import "package:intl/intl.dart";
 import "package:flutter/material.dart";
 import "package:project_to_to_manager/pages/project.dart";
 
+import "package:url_launcher/url_launcher.dart";
+
 import "../small_classes.dart";
 
 class ProjectPreview extends StatefulWidget {
@@ -61,7 +63,7 @@ class _ProjectPreviewState extends State<ProjectPreview> {
                           widget.projectTitle,
                           style: const TextStyle(fontSize: 32),
                           overflow: TextOverflow.ellipsis,
-                          maxLines: 3,
+                          maxLines: 1,
                         ),
                         GestureDetector(
                           onTap: () => setState(
@@ -71,7 +73,7 @@ class _ProjectPreviewState extends State<ProjectPreview> {
                             firstChild: Text(
                               widget.projectDescription,
                               softWrap: true,
-                              maxLines: 1,
+                              maxLines: 2,
                               overflow: TextOverflow.fade,
                             ),
                             secondChild: Text(
@@ -96,9 +98,38 @@ class _ProjectPreviewState extends State<ProjectPreview> {
                                 ...(widget.users
                                     .map((e) => <Widget>[
                                           InkWell(
-                                              onTap: () => {
-                                                    // TODO: Open Link e.discordUrl
-                                                  },
+                                              onTap: () async {
+                                                try {
+                                                  await launchUrl(
+                                                    Uri.parse(e.discordUrl),
+                                                  );
+                                                } catch (e) {
+                                                  showDialog(
+                                                    context: context,
+                                                    builder:
+                                                        (BuildContext context) {
+                                                      return AlertDialog(
+                                                        title:
+                                                            const Text("URL"),
+                                                        content: const Text(
+                                                            "URL konnte nicht geöffnet werden."),
+                                                        actions: [
+                                                          TextButton(
+                                                            child: const Text(
+                                                                "OK"),
+                                                            onPressed: () {
+                                                              // do something here
+                                                              Navigator.of(
+                                                                      context)
+                                                                  .pop();
+                                                            },
+                                                          ),
+                                                        ],
+                                                      );
+                                                    },
+                                                  );
+                                                }
+                                              },
                                               child: Text(e.name)),
                                           const SizedBox(width: 3),
                                         ])
@@ -134,8 +165,35 @@ class _ProjectPreviewState extends State<ProjectPreview> {
                                 InkWell(
                                   child: Text(widget.githubRepo?.repoName ??
                                       'Repo Name missing'),
-                                  onTap: () => {
-                                    // TODO Open Link: githubRepo.url
+                                  onTap: () async {
+                                    try {
+                                      if (widget.githubRepo?.url != null) {
+                                        launchUrl(
+                                          Uri.parse(
+                                              widget.githubRepo?.url ?? ""),
+                                        );
+                                      }
+                                    } catch (e) {
+                                      showDialog(
+                                        context: context,
+                                        builder: (BuildContext context) {
+                                          return AlertDialog(
+                                            title: const Text("URL"),
+                                            content: const Text(
+                                                "URL konnte nicht geöffnet werden."),
+                                            actions: [
+                                              TextButton(
+                                                child: const Text("OK"),
+                                                onPressed: () {
+                                                  // do something here
+                                                  Navigator.of(context).pop();
+                                                },
+                                              ),
+                                            ],
+                                          );
+                                        },
+                                      );
+                                    }
                                   },
                                 )
                               ],

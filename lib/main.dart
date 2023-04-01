@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:project_to_to_manager/pages/create_project.dart';
 import 'package:project_to_to_manager/pages/home.dart';
 
 void main() {
@@ -15,19 +16,22 @@ class App extends StatelessWidget {
       title: 'ToDo-Liste',
       theme: ThemeData(
         brightness: Brightness.dark,
-        primaryColor: const Color(0xFF065775),
+        primaryColor: const Color.fromARGB(255, 9, 126, 169),
         colorScheme: ColorScheme.fromSwatch(
           backgroundColor: const Color.fromARGB(255, 0, 25, 45),
-          primarySwatch: Colors.indigo,
-          accentColor: Colors.blue,
+          primarySwatch: Colors.blue,
+          accentColor: Colors.blue[600],
           errorColor: Colors.redAccent,
-          cardColor: Colors.black,
+          cardColor: Color.fromARGB(255, 0, 2, 22),
           brightness: Brightness.dark,
         ),
       ),
       routes: {
         '/': (context) {
           return const Home();
+        },
+        '/create-project': (context) {
+          return const ProjectCreate();
         }
       },
     );
